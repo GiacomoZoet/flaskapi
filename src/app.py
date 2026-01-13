@@ -15,12 +15,17 @@ def get_products():
     return jsonify({"products": products,
                     "message": "Product list"})
 
-@app.route('/product/<string:product_name>', methods=['GET'])
+@app.route('/products/<string:product_name>', methods=['GET'])
 def get_product(product_name):
-    productFound = [product for product in products if product["name"] == product_name]
+    productFound = [product for product in products if product["name"] == product_name.lower()]
     print(productFound)
     
-    return "OK"
+    
+    if productFound:
+        return jsonify({"product": productFound[0],
+                    "message": "One product"})
+    else:
+        return jsonify({"message": "product not found"})
 
 if __name__ == '__main__':
     

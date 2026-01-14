@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from products import products
-
+from markupsafe import escape
 app = Flask(__name__)
 
 @app.route('/')
@@ -80,6 +80,22 @@ def delete_product(product_name):
                     "message": "Product deleted"}), 204
     else:
         return jsonify({"message": "product not found"})
+
+# @app.route('/<name>')
+# def  hello(name):
+#     return "Hello" + escape(name)
+
+@app.route('/projects')
+def projects():
+    return "This is the projects paage!"
+
+@app.route('/about')
+def about():
+    return "About us"
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"Message": "Not Found"}), 404
 
 if __name__ == '__main__':
     
